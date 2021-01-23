@@ -1,0 +1,1 @@
+const omri: string = 'hi';
