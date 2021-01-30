@@ -20,6 +20,10 @@ export class PreGameComponent implements OnInit, OnDestroy {
     });
   }
 
+  onNoteSubmit(note: string) {
+    this.socketService.emit(events.noteSubmission, note);
+  }
+
   ngOnDestroy(): void {
     this.userConnectionsSub.unsubscribe();
   }

@@ -1,1 +1,11 @@
-<p>pre-game worksssss!</p>
+<div id="per-game-container">
+    <div id="note-sub">
+        <p>Game about to start! Submit your notes</p>
+        <input 
+        #notesInput
+        type="text"
+        (keydown.enter)="onNoteSubmit(notesInput.value)"
+        value="">
+        <button (click)="onNoteSubmit(notesInput.value)"></button>
+    </div>
+</div>
