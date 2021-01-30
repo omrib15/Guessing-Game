@@ -19,7 +19,7 @@ app.get( "/", (req: Request, res: Response ) => {
     res.send( "hey" );
 } );
 
-io.on('connection', connectionSetup);
+io.on('connection', (socket) => connectionSetup(io, socket));
 
 // start the express server
 http.listen( port, () => {

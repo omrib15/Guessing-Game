@@ -10,6 +10,7 @@ import { SocketService } from 'src/app/services/socket-service/socket.service';
 })
 export class PreGameComponent implements OnInit, OnDestroy {
   userConnectionsSub: Subscription;
+  currentNotsSub: Subscription;
 
   constructor(private socketService: SocketService) { }
 
@@ -18,6 +19,9 @@ export class PreGameComponent implements OnInit, OnDestroy {
     this.userConnectionsSub = this.socketService.listen(events.playerJoined).subscribe(message => {
       console.log(message);
     });
+    this.currentNotsSub = this.socketService.listen('currentNotes').subscribe(message => {
+      console.log(message);
+    })
   }
 
   onNoteSubmit(note: string) {
@@ -26,6 +30,7 @@ export class PreGameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userConnectionsSub.unsubscribe();
+    this.currentNotsSub.unsubscribe();
   }
 
 }

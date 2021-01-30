@@ -1,15 +1,18 @@
+import { Socket } from 'dgram';
 import { events } from '../../shared-events/events';
-const defaultRoom = 'room';
+import { GameController } from '../controllers/game.controller';
 
-export const connectionSetup = (socket) => {
+const defaultRoom = 'room';
+const gameController = new GameController();
+
+export const connectionSetup = (io, socket) => {
     // Join room
-    socket.join('room');
-    socket.to('room').emit(events.playerJoined);
+    socket.join(defaultRoom);
+    socket.to(defaultRoom).emit(events.playerJoined);
 
     // pre-game
-    socket.on(events.noteSubmission, onNoteSubmit);
+    socket.on(events.noteSubmission, (note) => {
+        gameController.addNote(note);
+        io.in(defaultRoom).emit('currentNotes', gameController.notes);
+    });
 };
-
-const onNoteSubmit = (note: string) => {
-    console.log('note submitted ' + note);
-}
