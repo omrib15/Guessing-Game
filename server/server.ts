@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { events } from '../shared-events/events';
+import { connectionSetup } from './socket.io';
 
 const app = require('express')();
 const http = require('http').Server(app);
@@ -19,10 +19,7 @@ app.get( "/", (req: Request, res: Response ) => {
     res.send( "hey" );
 } );
 
-io.on('connection', socket => {
-    socket.join('room');
-    socket.to('room').emit(events.playerJoined);
-});
+io.on('connection', connectionSetup);
 
 // start the express server
 http.listen( port, () => {
