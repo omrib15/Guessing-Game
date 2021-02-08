@@ -1,5 +1,6 @@
 export const events = {
     playerJoined: 'PLAYER_JOINED',
     noteSubmission: 'NOTE_SUBMISSION',
-    joinTeam: 'JOIN_TEAM'
+    joinTeam: 'JOIN_TEAM',
+    createRoom: 'CREATE_ROOM'
 };
