@@ -1,0 +1,22 @@
+<div id="per-game-container">
+    <div id="note-sub">
+        <p>Game about to start! Submit your notes</p>
+        <input
+        #notesInput
+        type="text"
+        (keydown.enter)="onNoteSubmit(notesInput.value)"
+        value="">
+        <button (click)="onNoteSubmit(notesInput.value)">Submit</button>
+    </div>
+    <div id="team-selection">
+        <p>Select team</p>
+        <div class="team">
+            <button (click)="onTeamSelect('red', notesInput.value)">Join Red</button>
+            <p *ngFor="let player of teams?.red">{{player}}</p>
+        </div>
+        <div class="team">
+          <button (click)="onTeamSelect('blue', notesInput.value)">Join Blue</button>
+          <p *ngFor="let player of teams?.blue">{{player}}</p>
+      </div>
+    </div>
+</div>

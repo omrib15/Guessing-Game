@@ -1,0 +1,8 @@
+<p>Join or create a new game room</p>
+<input
+        #joinRoomInput
+        type="text"
+        (keydown.enter)="joinRoom(joinRoomInput.value)"
+        value="">
+        <button (click)="joinRoom(joinRoomInput.value)">Join room</button>
+<button (click)="newRoom()">New room</button>
