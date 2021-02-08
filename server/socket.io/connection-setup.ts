@@ -19,7 +19,6 @@ export const connectionSetup = (io, socket) => {
 
     socket.on(events.joinTeam, (data) => {
       gameController.joinTeam(JSON.parse(data));
-      console.log(gameController.teams);
       io.in(defaultRoom).emit(events.joinTeam, gameController.teams);
     });
 };
