@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SocketService } from '../../services/socket-service/socket.service';
 import { events } from 'shared/events';
 import { Subscription } from 'rxjs';
@@ -9,8 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   roomCreationsSub: Subscription;
+  joinRoomSub: Subscription;
 
   constructor(
     private socketService: SocketService,
@@ -18,13 +19,23 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.roomCreationsSub = this.socketService.listen(events.createRoom).subscribe(roomId => {
-      console.log(roomId);
+      this.route.navigate(['pre-game/'+roomId]);
+    });
+    this.joinRoomSub = this.socketService.listen(events.joinRoom).subscribe(roomId => {
       this.route.navigate(['pre-game/'+roomId]);
     });
   }
 
-  onNewRoom(): void {
+  newRoom(): void {
     this.socketService.emit(events.createRoom);
+  }
+
+  joinRoom(roomId: string): void {
+    this.socketService.emit(events.joinRoom, roomId);
+  }
+
+  ngOnDestroy(): void {
+    this.roomCreationsSub.unsubscribe();
   }
 
 }

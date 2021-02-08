@@ -1,7 +1,5 @@
-import { Socket } from 'dgram';
 import { events } from '../../shared/events';
 import { GameController } from '../controllers/game.controller';
-import { cloneDeep } from 'lodash';
 import * as short from 'short-uuid';
 
 const defaultRoom = 'room';
@@ -23,6 +21,14 @@ export const connectionSetup = (io, socket) => {
       socket.emit(events.createRoom, newRoomId);
       // remove later
       socket.to(newRoomId).emit(events.playerJoined);
+    });
+
+    socket.on(events.joinRoom, (roomId: string) => {
+      if (rooms[roomId]) {
+        socket.gameRoom = roomId;
+        socket.join(roomId);
+        socket.emit(events.joinRoom, roomId);
+      }
     });
 
     // pre-game
